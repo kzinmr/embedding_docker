@@ -25,13 +25,14 @@ def main():
     parser.add_argument('--window', '-w', type=int, default=16)
     parser.add_argument('--min-count', type=int, default=10)
     parser.add_argument('--max-vocab-size', type=int, default=30000)
+    parser.add_argument('--max-sentence-length', type=int, default=30000)
     parser.add_argument('--workers', type=int, default=-1)
     parser.add_argument('--sg', type=int, default=1)
     args = parser.parse_args()
     outputpath = args.output
     mc = multiprocessing.cpu_count() // 2
     workers = mc if args.workers == -1 else args.workers
-    sentences = word2vec.PathLineSentences(args.corpus_dir)
+    sentences = word2vec.PathLineSentences(args.corpus_dir, max_sentence_length=args.max_sentence_length)
     model = word2vec.Word2Vec(sentences,
                               size=args.dimension,
                               window=args.window,
