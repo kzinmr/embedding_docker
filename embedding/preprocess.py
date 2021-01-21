@@ -3,14 +3,19 @@ import os
 import random
 import unicodedata
 import MeCab
+from typing import Optional
 
 
 class MecabTokenizer:
     def __init__(self):
         self.tagger = MeCab.Tagger("-Owakati")
 
-    def tokenize(self, text: str) -> str:
-        return self.tagger.parse(text).rstrip()
+    def tokenize(self, text: str) -> Optional[str]:
+        t = self.tagger.parse(text)
+        if t is not None:
+            return t.rstrip()
+        else:
+            return None
 
 
 def preprocess(
@@ -64,7 +69,8 @@ if __name__ == "__main__":
             with open(doc_path) as fp:
                 doc_text = preprocess(fp.read())
                 doc_tokenized = tokenizer.tokenize(doc_text)
-                docs_to_write.append(doc_tokenized)
+                if doc_tokenized is not None:
+                    docs_to_write.append(doc_tokenized)
                 n_current_docs += 1
             if n_current_docs % n_lines_per_file == 0 and docs_to_write:
                 file_no += 1
