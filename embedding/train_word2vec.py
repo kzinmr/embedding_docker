@@ -1,7 +1,9 @@
 import argparse
 import multiprocessing
 from gensim.models import word2vec
+import codecs
 
+codecs.register_error('strict', codecs.lookup_error('surrogateescape'))
 
 """
 USAGE:
