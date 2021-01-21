@@ -42,5 +42,6 @@ RUN mkdir -p /app/workspace/models
 
 # COPY workspace/raw/ workspace/raw/
 COPY *.py ./
+COPY *.sh ./
 
-CMD ["bash", "run_local.sh"]
+CMD ["bash", "./run_local.sh"]
