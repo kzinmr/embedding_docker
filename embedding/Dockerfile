@@ -38,8 +38,9 @@ RUN pip install -r requirements.txt
 
 RUN mkdir -p /app/workspace/raw
 RUN mkdir -p /app/workspace/data
+RUN mkdir -p /app/workspace/models
 
-COPY workspace/raw/ workspace/raw/
+# COPY workspace/raw/ workspace/raw/
 COPY *.py ./
 
 CMD ["bash", "run_local.sh"]
