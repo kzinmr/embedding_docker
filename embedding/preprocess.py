@@ -78,3 +78,4 @@ if __name__ == "__main__":
         filepath = os.path.join(args.corpus_dir, f"corpus_{file_no}.txt")
         with open(filepath, "w") as fp:
             fp.write("\n\n".join(docs_to_write))
+    print('Done preprocess')
