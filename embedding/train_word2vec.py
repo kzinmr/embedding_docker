@@ -14,24 +14,29 @@ mloaded = word2vec.KeyedVectors.load('/tmp/w2vmodel_wikipedia_20170601_20160502.
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input', '-i')
+    parser.add_argument(
+        "--corpus-dir",
+        "-i",
+        default="/app/workspace/data",
+        help="Location of pre-training text files.",
+    )
     parser.add_argument('--output', '-o')
-    parser.add_argument('--dimension', '-d', type=int, default=250)
-    parser.add_argument('--window', '-w', type=int, default=5)
-    parser.add_argument('--min_count', type=int, default=40)
+    parser.add_argument('--dimension', '-d', type=int, default=256)
+    parser.add_argument('--window', '-w', type=int, default=16)
+    parser.add_argument('--min-count', type=int, default=10)
+    parser.add_argument('--max-vocab-size', type=int, default=30000)
     parser.add_argument('--workers', type=int, default=-1)
     parser.add_argument('--sg', type=int, default=1)
     args = parser.parse_args()
-    inputpath = args.input
     outputpath = args.output
-    sentences = word2vec.LineSentence(inputpath)
-    # training
-    mc = multiprocessing.cpu_count()
+    mc = multiprocessing.cpu_count() // 2
     workers = mc if args.workers == -1 else args.workers
+    sentences = word2vec.PathLineSentences(args.corpus_dir)
     model = word2vec.Word2Vec(sentences,
                               size=args.dimension,
                               window=args.window,
                               min_count=args.min_count,
+                              max_vocab_size=args.max_vocab_size,
                               workers=workers,
                               sg=args.sg)
     # not saving temporary data
