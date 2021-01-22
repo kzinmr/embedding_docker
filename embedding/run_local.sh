@@ -1,5 +1,5 @@
 #!/bin/bash
-window=32
+window=4
 min_count=10
 dimension=256
 max_vocab_size=50000

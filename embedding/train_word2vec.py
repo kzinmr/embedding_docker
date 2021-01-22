@@ -3,7 +3,7 @@ import multiprocessing
 from gensim.models import word2vec
 import codecs
 
-codecs.register_error('strict', codecs.lookup_error('surrogateescape'))
+# codecs.register_error('strict', codecs.lookup_error('surrogateescape'))
 
 """
 USAGE:
@@ -45,6 +45,7 @@ def main():
     # not saving temporary data
     model.delete_temporary_training_data()
     model.save(outputpath)
+    model.wv.save_word2vec_format(f'{outputpath}.txt')
 
 
 if __name__ == "__main__":
