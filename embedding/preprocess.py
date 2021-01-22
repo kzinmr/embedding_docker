@@ -75,7 +75,7 @@ if __name__ == "__main__":
             if n_current_docs % n_lines_per_file == 0 and docs_to_write:
                 file_no += 1
                 filepath = os.path.join(args.corpus_dir, f"corpus_{file_no}.txt")
-                with open(filepath, "w", encoding='utf-8', errors='ignore') as fp:
+                with open(filepath, "w", encoding='utf-8', errors='surrogateescape') as fp:
                     for l in docs_to_write:
                         fp.write(l)
                         fp.write("\n")
